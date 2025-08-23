@@ -3,6 +3,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.25"
 	id("org.springframework.boot") version "3.5.5"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("com.diffplug.spotless") version "7.2.1"
 }
 
 group = "com.behlers"
@@ -12,6 +13,12 @@ description = "shortener"
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+spotless {
+	kotlin {
+		ktfmt().googleStyle()
 	}
 }
 
