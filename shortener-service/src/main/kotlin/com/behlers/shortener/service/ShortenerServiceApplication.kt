@@ -1,11 +1,11 @@
-package com.behlers.url.router
+package com.behlers.shortener.service
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class RouterApplication
+class ShortenerServiceApplication
 
 fun main(args: Array<String>) {
-	runApplication<RouterApplication>(*args)
+	runApplication<ShortenerServiceApplication>(*args)
 }

@@ -1,4 +1,4 @@
-package com.behlers.url.router
+package com.behlers.shortener.service
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

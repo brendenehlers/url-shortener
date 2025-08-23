@@ -7,7 +7,7 @@ plugins {
 
 group = "com.behlers"
 version = "0.0.1-SNAPSHOT"
-description = "router"
+description = "shortener"
 
 java {
 	toolchain {
@@ -29,6 +29,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	implementation("org.springframework.modulith:spring-modulith-starter-core")
+	implementation("org.flywaydb:flyway-core")
+	implementation("org.flywaydb:flyway-database-postgresql")
+	implementation("org.springframework:spring-jdbc")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("org.postgresql:postgresql")
 	runtimeOnly("org.postgresql:r2dbc-postgresql")
