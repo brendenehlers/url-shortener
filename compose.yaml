@@ -45,10 +45,10 @@ services:
       KAFKA_JMX_PORT: 9997
       KAFKA_JMX_ENABLED: "true"
 
-  schemaregistry:
+  schema-registry:
     image: confluentinc/cp-schema-registry:latest
-    container_name: schemaregistry
-    hostname: schemaregistry
+    container_name: schema-registry
+    hostname: schema-registry
     networks:
       - cluster
     restart: always
@@ -59,8 +59,8 @@ services:
     environment:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
       SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: PLAINTEXT
-      SCHEMA_REGISTRY_HOST_NAME: schemaregistry
-      SCHEMA_REGISTRY_LISTENERS: http://schemaregistry:8085
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8085
 
       SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL: "http"
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: INFO
@@ -79,15 +79,14 @@ services:
       KAFKA_CLUSTERS_0_NAME: "local"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
       KAFKA_CLUSTERS_0_METRICS_PORT: 9997
-      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry:8085
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8085
       DYNAMIC_CONFIG_ENABLED: 'true'
     depends_on:
       - kafka
-      - schemaregistry
+      - schema-registry
 
 volumes:
   postgres_data:
-  kafka_data:
 
 networks:
   cluster:
