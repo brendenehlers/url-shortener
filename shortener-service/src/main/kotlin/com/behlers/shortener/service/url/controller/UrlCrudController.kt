@@ -20,12 +20,12 @@ class UrlCrudController(
 ) {
 
   @GetMapping("/{shortCode}")
-  fun getUrl(@PathVariable shortCode: String): Mono<Url> {
+  fun getUrl(@PathVariable shortCode: String): Url? {
     return urlService.getUrl(shortCode)
   }
 
   @PostMapping
-  fun createUrl(@RequestBody createUrlRequestBody: CreateUrlRequestBody): Mono<Url> {
+  fun createUrl(@RequestBody createUrlRequestBody: CreateUrlRequestBody): Url {
     return urlService.createUrl(
       createUrlRequestBody.longUrl
     )
@@ -35,7 +35,7 @@ class UrlCrudController(
   fun updateUrl(
     @PathVariable shortCode: String,
     @RequestBody updateUrlRequestBody: UpdateUrlRequestBody
-  ): Mono<Url> {
+  ): Url {
     return urlService.updateUrl(shortCode, updateUrlRequestBody.longUrl)
   }
 

@@ -42,12 +42,10 @@ open class TestContainerBase {
       registry.add("spring.flyway.url") { db.jdbcUrl }
       registry.add("spring.flyway.default-schema") { "public" }
 
-      // r2dbc configuration
-      registry.add("spring.r2dbc.url") {
-        "r2dbc:postgresql://${db.host}:${db.firstMappedPort}/${db.databaseName}"
-      }
-      registry.add("spring.r2dbc.username") { db.username }
-      registry.add("spring.r2dbc.password") { db.password }
+      // datasource configuration
+      registry.add("spring.datasource.url") { db.jdbcUrl }
+      registry.add("spring.datasource.username") { db.username }
+      registry.add("spring.datasource.password") { db.password }
     }
   }
 }

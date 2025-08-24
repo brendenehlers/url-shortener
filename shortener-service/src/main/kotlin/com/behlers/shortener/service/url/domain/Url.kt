@@ -1,23 +1,24 @@
 package com.behlers.shortener.service.url.domain
 
-import org.springframework.data.annotation.Id
-import org.springframework.data.relational.core.mapping.Column
-import org.springframework.data.relational.core.mapping.Table
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
 import java.time.Instant
 
-@Table("urls")
+@Entity(name = "urls")
 class Url(
 
   @Id
-  @Column("short_code")
-  val shortCode: String,
+  @Column(name = "short_code")
+  var shortCode: String,
 
-  @Column("long_url")
-  val longUrl: String,
+  @Column(name = "long_url")
+  var longUrl: String,
 
-  @Column("created_at")
-  val createdAt: Instant = Instant.now(),
+  @Column(name = "created_at")
+  var createdAt: Instant = Instant.now(),
 
-  @Column("updated_at")
-  val updatedAt: Instant = Instant.now(),
-)
+  @Column(name = "updated_at")
+  var updatedAt: Instant = Instant.now(),
+) {
+}
