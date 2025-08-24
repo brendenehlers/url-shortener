@@ -1,8 +1,8 @@
 package com.behlers.shortener.service.url.service
 
-import org.springframework.stereotype.Service
 import java.math.BigInteger
 import java.security.MessageDigest
+import org.springframework.stereotype.Service
 
 @Service
 class EncodingService {
@@ -22,17 +22,13 @@ class EncodingService {
     var number = BigInteger(1, bytes)
 
     // constrain url length to N characters
-    number = number.mod(
-      BigInteger.valueOf(ALPHABET.length.toLong())
-        .pow(SHORT_CODE_LENGTH)
-    )
+    number = number.mod(BigInteger.valueOf(ALPHABET.length.toLong()).pow(SHORT_CODE_LENGTH))
 
-    // build string by constantly dividing by `ALPHABET.length` and using the remainder to pick a char
+    // build string by constantly dividing by `ALPHABET.length` and using the remainder to pick a
+    // char
     val sb = StringBuilder()
     while (number > BigInteger.ZERO) {
-      val (div, rem) = number.divideAndRemainder(
-        BigInteger.valueOf(ALPHABET.length.toLong())
-      )
+      val (div, rem) = number.divideAndRemainder(BigInteger.valueOf(ALPHABET.length.toLong()))
       number = div
       val remainder = rem.toInt()
       sb.append(ALPHABET[remainder])
