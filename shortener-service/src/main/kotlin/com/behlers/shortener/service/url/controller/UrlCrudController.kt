@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 class UrlCrudController(private val urlService: UrlService) {
 
   @GetMapping("/{shortCode}")
-  fun getUrl(@PathVariable shortCode: String): Url? {
+  fun getUrl(@PathVariable shortCode: String): Url {
     return urlService.getUrl(shortCode)
   }
 
