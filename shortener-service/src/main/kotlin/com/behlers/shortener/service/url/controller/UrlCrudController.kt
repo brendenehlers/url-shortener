@@ -1,9 +1,12 @@
 package com.behlers.shortener.service.url.controller
 
 import com.behlers.shortener.service.url.domain.CreateUrlRequestBody
+import com.behlers.shortener.service.url.domain.DeleteUrlResponseBody
 import com.behlers.shortener.service.url.domain.UpdateUrlRequestBody
 import com.behlers.shortener.service.url.domain.Url
 import com.behlers.shortener.service.url.service.UrlService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -35,7 +38,8 @@ class UrlCrudController(private val urlService: UrlService) {
   }
 
   @DeleteMapping("/{shortCode}")
-  fun deleteUrl(@PathVariable shortCode: String) {
+  fun deleteUrl(@PathVariable shortCode: String): ResponseEntity<DeleteUrlResponseBody> {
     urlService.deleteUrl(shortCode)
+    return ResponseEntity.status(HttpStatus.OK).body(DeleteUrlResponseBody("success"))
   }
 }
