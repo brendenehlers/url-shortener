@@ -94,12 +94,8 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"longUrl\": \"https://google.com\"\n}"
-				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/url/1",
+					"raw": "http://localhost:8080/api/v1/url/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -109,6 +105,25 @@
 						"api",
 						"v1",
 						"url",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "route",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
 						"1"
 					]
 				}
