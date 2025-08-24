@@ -5,9 +5,7 @@ import com.behlers.shortener.service.url.repository.UrlRepository
 import org.springframework.stereotype.Service
 
 @Service
-class UrlService(
-  val urlRepository: UrlRepository,
-) {
+class UrlService(private val urlRepository: UrlRepository) {
 
   // TODO replace this with actual algorithm
   private var tempCode = "1"
@@ -17,17 +15,11 @@ class UrlService(
   }
 
   fun createUrl(longUrl: String): Url {
-    return urlRepository.save(Url(
-        createShortCode(longUrl),
-        longUrl,
-    ))
+    return urlRepository.save(Url(createShortCode(longUrl), longUrl))
   }
 
   fun updateUrl(shortCode: String, longUrl: String): Url {
-    return urlRepository.save(Url(
-      shortCode,
-      longUrl,
-    ))
+    return urlRepository.save(Url(shortCode, longUrl))
   }
 
   fun deleteUrl(shortCode: String) {

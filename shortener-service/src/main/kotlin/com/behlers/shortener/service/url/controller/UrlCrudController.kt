@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping("/api/v1/url")
-class UrlCrudController(
-  val urlService: UrlService
-) {
+class UrlCrudController(private val urlService: UrlService) {
 
   @GetMapping("/{shortCode}")
   fun getUrl(@PathVariable shortCode: String): Url? {
@@ -26,23 +23,19 @@ class UrlCrudController(
 
   @PostMapping
   fun createUrl(@RequestBody createUrlRequestBody: CreateUrlRequestBody): Url {
-    return urlService.createUrl(
-      createUrlRequestBody.longUrl
-    )
+    return urlService.createUrl(createUrlRequestBody.longUrl)
   }
 
   @PostMapping("/{shortCode}")
   fun updateUrl(
     @PathVariable shortCode: String,
-    @RequestBody updateUrlRequestBody: UpdateUrlRequestBody
+    @RequestBody updateUrlRequestBody: UpdateUrlRequestBody,
   ): Url {
     return urlService.updateUrl(shortCode, updateUrlRequestBody.longUrl)
   }
 
   @DeleteMapping("/{shortCode}")
-  fun deleteUrl(
-    @PathVariable shortCode: String
-  ) {
+  fun deleteUrl(@PathVariable shortCode: String) {
     urlService.deleteUrl(shortCode)
   }
 }

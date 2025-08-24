@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/")
-class RouterController(val routerService: RouterService) {
+class RouterController(private val routerService: RouterService) {
   @GetMapping("{shortCode}")
   fun route(response: HttpServletResponse, @PathVariable shortCode: String) {
     val longUrl = routerService.getUrl(shortCode)

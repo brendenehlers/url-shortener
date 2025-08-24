@@ -4,9 +4,7 @@ import com.behlers.shortener.service.url.service.UrlService
 import org.springframework.stereotype.Service
 
 @Service
-class RouterService(
-  private val urlService: UrlService,
-) {
+class RouterService(private val urlService: UrlService) {
   fun getUrl(shortCode: String): String? {
     return urlService.getUrl(shortCode)?.longUrl
   }

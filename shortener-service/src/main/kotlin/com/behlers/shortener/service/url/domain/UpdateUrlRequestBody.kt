@@ -1,5 +1,3 @@
 package com.behlers.shortener.service.url.domain
 
-class UpdateUrlRequestBody(
-  val longUrl: String
-)
+class UpdateUrlRequestBody(val longUrl: String)
