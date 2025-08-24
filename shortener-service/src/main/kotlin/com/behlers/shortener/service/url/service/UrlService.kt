@@ -16,7 +16,13 @@ class UrlService(
   }
 
   fun createUrl(longUrl: String): Url {
-    return urlRepository.save(Url(encodingService.encode(longUrl), longUrl))
+    val shortCode = encodingService.encode(longUrl)
+
+    if (urlRepository.existsUrlByShortCode(shortCode)) {
+      return getUrl(shortCode)
+    }
+
+    return urlRepository.save(Url(shortCode, longUrl))
   }
 
   fun updateUrl(shortCode: String, longUrl: String): Url {

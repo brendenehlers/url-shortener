@@ -9,4 +9,6 @@ interface UrlRepository : JpaRepository<Url, String> {
   fun getUrlByShortCode(shortCode: String): Url?
 
   fun deleteUrlByShortCode(shortCode: String)
+
+  fun existsUrlByShortCode(shortCode: String): Boolean
 }
