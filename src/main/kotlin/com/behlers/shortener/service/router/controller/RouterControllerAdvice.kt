@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class RouterControllerAdvice {
 
-  @ExceptionHandler
+  @ExceptionHandler(UrlNotFoundException::class)
   fun handleUrlNotFoundException(
     exception: UrlNotFoundException
   ): ResponseEntity<DefaultErrorResponse> {

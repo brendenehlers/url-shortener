@@ -1,9 +1,10 @@
 package com.behlers.shortener.service.url.service
 
-import com.behlers.shortener.service.url.domain.Url
+import com.behlers.shortener.service.url.domain.UrlEntity
 import com.behlers.shortener.service.url.domain.UrlNotFoundException
 import com.behlers.shortener.service.url.repository.UrlRepository
 import org.springframework.stereotype.Service
+import java.net.URL
 
 @Service
 class UrlService(
@@ -11,21 +12,21 @@ class UrlService(
   private val encodingService: EncodingService,
 ) {
 
-  fun getUrl(shortCode: String): Url {
+  fun getUrl(shortCode: String): UrlEntity {
     return urlRepository.getUrlByShortCode(shortCode) ?: throw UrlNotFoundException(shortCode)
   }
 
-  fun createUrl(longUrl: String): Url {
-    val shortCode = encodingService.encode(longUrl)
+  fun createUrl(longUrl: URL): UrlEntity {
+    val shortCode = encodingService.encode(longUrl.toString())
 
     if (urlRepository.existsUrlByShortCode(shortCode)) {
       return getUrl(shortCode)
     }
 
-    return urlRepository.save(Url(shortCode, longUrl))
+    return urlRepository.save(UrlEntity(shortCode, longUrl.toString()))
   }
 
-  fun updateUrl(shortCode: String, longUrl: String): Url {
+  fun updateUrl(shortCode: String, longUrl: String): UrlEntity {
     val existingUrl =
       urlRepository.getUrlByShortCode(shortCode) ?: throw UrlNotFoundException(shortCode)
     return urlRepository.save(existingUrl.apply { this.longUrl = longUrl })
