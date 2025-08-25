@@ -11,13 +11,13 @@ import io.kotest.matchers.date.shouldBeBefore
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import java.time.Instant
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.reactive.server.WebTestClient
-import java.time.Instant
 
 @AutoConfigureWebTestClient
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -118,9 +118,7 @@ class UrlCrudControllerTest : TestContainerBase() {
       .uri("/api/v1/url/$shortCode")
       .exchange()
       .expectBody(DeleteUrlResponseBody::class.java)
-      .value {
-        it.message shouldBe "success"
-      }
+      .value { it.message shouldBe "success" }
 
     urlRepository.getUrlByShortCode(shortCode).shouldBeNull()
   }
