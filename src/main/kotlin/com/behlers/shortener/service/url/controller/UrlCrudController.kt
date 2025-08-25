@@ -11,6 +11,7 @@ import com.behlers.shortener.service.url.service.UrlService
 import java.net.MalformedURLException
 import java.net.URI
 import java.net.URISyntaxException
+import java.net.URL
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -20,8 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.net.URL
-import java.util.function.Function
 
 @RestController
 @RequestMapping("/api/v1/url")
