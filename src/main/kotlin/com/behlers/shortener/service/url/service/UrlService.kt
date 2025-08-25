@@ -26,10 +26,10 @@ class UrlService(
     return urlRepository.save(UrlEntity(shortCode, longUrl.toString()))
   }
 
-  fun updateUrl(shortCode: String, longUrl: String): UrlEntity {
+  fun updateUrl(shortCode: String, longUrl: URL): UrlEntity {
     val existingUrl =
       urlRepository.getUrlByShortCode(shortCode) ?: throw UrlNotFoundException(shortCode)
-    return urlRepository.save(existingUrl.apply { this.longUrl = longUrl })
+    return urlRepository.save(existingUrl.apply { this.longUrl = longUrl.toString() })
   }
 
   fun deleteUrl(shortCode: String) {

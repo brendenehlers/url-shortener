@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.net.URL
+import java.util.function.Function
 
 @RestController
 @RequestMapping("/api/v1/url")
@@ -30,25 +32,13 @@ class UrlCrudController(
 
   @GetMapping("/{shortCode}")
   fun getUrl(@PathVariable shortCode: String): UrlEntity {
-    if (!encodingService.isValidEncoding(shortCode)) throw InvalidCodeException(shortCode, null)
+    validateShortCode(shortCode)
     return urlService.getUrl(shortCode)
   }
 
   @PostMapping
   fun createUrl(@RequestBody createUrlRequestBody: CreateUrlRequestBody): UrlEntity {
-    val exceptionFn = { url: String, cause: Throwable ->
-      throw InvalidUrlSyntaxException(url, cause)
-    }
-    try {
-      val url = URI(createUrlRequestBody.longUrl).toURL()
-      return urlService.createUrl(url)
-    } catch (e: URISyntaxException) {
-      exceptionFn(createUrlRequestBody.longUrl, e)
-    } catch (e: MalformedURLException) {
-      exceptionFn(createUrlRequestBody.longUrl, e)
-    } catch (e: IllegalArgumentException) {
-      exceptionFn(createUrlRequestBody.longUrl, e)
-    }
+    return createUrlWrapper(createUrlRequestBody.longUrl) { urlService.createUrl(it) }
   }
 
   @PostMapping("/{shortCode}")
@@ -56,14 +46,34 @@ class UrlCrudController(
     @PathVariable shortCode: String,
     @RequestBody updateUrlRequestBody: UpdateUrlRequestBody,
   ): UrlEntity {
-    if (!encodingService.isValidEncoding(shortCode)) throw InvalidCodeException(shortCode, null)
-    return urlService.updateUrl(shortCode, updateUrlRequestBody.longUrl)
+    validateShortCode(shortCode)
+    return createUrlWrapper(updateUrlRequestBody.longUrl) { urlService.updateUrl(shortCode, it) }
   }
 
   @DeleteMapping("/{shortCode}")
   fun deleteUrl(@PathVariable shortCode: String): ResponseEntity<DeleteUrlResponseBody> {
-    if (!encodingService.isValidEncoding(shortCode)) throw InvalidCodeException(shortCode, null)
+    validateShortCode(shortCode)
     urlService.deleteUrl(shortCode)
     return ResponseEntity.status(HttpStatus.OK).body(DeleteUrlResponseBody("success"))
+  }
+
+  private fun validateShortCode(shortCode: String) {
+    if (!encodingService.isValidEncoding(shortCode)) throw InvalidCodeException(shortCode, null)
+  }
+
+  private fun createUrlWrapper(longUrl: String, fn: (URL) -> UrlEntity): UrlEntity {
+    val exceptionFn = { url: String, cause: Throwable ->
+      throw InvalidUrlSyntaxException(url, cause)
+    }
+    try {
+      val url = URI(longUrl).toURL()
+      return fn(url)
+    } catch (e: URISyntaxException) {
+      exceptionFn(longUrl, e)
+    } catch (e: MalformedURLException) {
+      exceptionFn(longUrl, e)
+    } catch (e: IllegalArgumentException) {
+      exceptionFn(longUrl, e)
+    }
   }
 }
