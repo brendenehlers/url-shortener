@@ -122,4 +122,84 @@ class UrlCrudControllerTest : TestContainerBase() {
 
     urlRepository.getUrlByShortCode(shortCode).shouldBeNull()
   }
+
+  @Test
+  fun `short code with length 7 fails on get`() {
+    val shortCode = "1234567"
+
+    webClient.get().uri("/api/v1/url/$shortCode").exchange().expectStatus().is4xxClientError
+  }
+
+  @Test
+  fun `short code with invalid character fails on get`() {
+    val shortCode = "!1234567"
+
+    webClient.get().uri("/api/v1/url/$shortCode").exchange().expectStatus().is4xxClientError
+  }
+
+  @Test
+  fun `short code with length 7 fails on delete`() {
+    val shortCode = "1234567"
+
+    webClient.delete().uri("/api/v1/url/$shortCode").exchange().expectStatus().is4xxClientError
+  }
+
+  @Test
+  fun `short code with invalid character fails on delete`() {
+    val shortCode = "!1234567"
+
+    webClient.delete().uri("/api/v1/url/$shortCode").exchange().expectStatus().is4xxClientError
+  }
+
+  @Test
+  fun `short code with length 7 fails on update`() {
+    val shortCode = "1234567"
+
+    webClient
+      .post()
+      .uri("/api/v1/url/$shortCode")
+      .bodyValue(UpdateUrlRequestBody("https://test.com"))
+      .exchange()
+      .expectStatus()
+      .is4xxClientError
+  }
+
+  @Test
+  fun `short code with invalid character fails on update`() {
+    val shortCode = "!1234567"
+
+    webClient
+      .post()
+      .uri("/api/v1/url/$shortCode")
+      .bodyValue(UpdateUrlRequestBody("https://test.com"))
+      .exchange()
+      .expectStatus()
+      .is4xxClientError
+  }
+
+  @Test
+  fun `invalid long url fails on update`() {
+    val longUrl = "bad-url"
+
+    webClient
+      .post()
+      .uri("/api/v1/url/12345678")
+      .bodyValue(UpdateUrlRequestBody(longUrl))
+      .exchange()
+      .expectStatus()
+      .is4xxClientError
+  }
+
+  @Test
+  fun `invalid long url fails on create`() {
+    val longUrl = "bad-url"
+
+    webClient
+      .post()
+      .uri("/api/v1/url")
+      .bodyValue(CreateUrlRequestBody(longUrl))
+      .exchange()
+      .expectStatus()
+      .is4xxClientError
+  }
 }
