@@ -19,7 +19,7 @@ class EncodingService {
   }
 
   fun isValidEncoding(input: String): Boolean {
-    if (input.length == SHORT_CODE_LENGTH) return false
+    if (input.length != SHORT_CODE_LENGTH) return false
     return input.all { ALPHABET.contains(it) }
   }
 
