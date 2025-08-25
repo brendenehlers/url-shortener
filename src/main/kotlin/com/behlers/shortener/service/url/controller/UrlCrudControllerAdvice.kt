@@ -20,7 +20,9 @@ class UrlCrudControllerAdvice {
   }
 
   @ExceptionHandler(InvalidUrlSyntaxException::class)
-  fun handleInvalidUrlSyntaxException(exception: InvalidUrlSyntaxException): ResponseEntity<DefaultErrorResponse> {
+  fun handleInvalidUrlSyntaxException(
+    exception: InvalidUrlSyntaxException
+  ): ResponseEntity<DefaultErrorResponse> {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
       .body(DefaultErrorResponse(reason = exception.message ?: "Bad input in request"))
   }

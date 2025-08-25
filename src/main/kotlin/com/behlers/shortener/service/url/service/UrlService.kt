@@ -3,8 +3,8 @@ package com.behlers.shortener.service.url.service
 import com.behlers.shortener.service.url.domain.UrlEntity
 import com.behlers.shortener.service.url.domain.UrlNotFoundException
 import com.behlers.shortener.service.url.repository.UrlRepository
-import org.springframework.stereotype.Service
 import java.net.URL
+import org.springframework.stereotype.Service
 
 @Service
 class UrlService(

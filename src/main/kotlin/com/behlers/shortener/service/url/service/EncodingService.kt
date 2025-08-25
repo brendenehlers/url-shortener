@@ -18,6 +18,11 @@ class EncodingService {
     return encodeToBase62(digest)
   }
 
+  fun isValidEncoding(input: String): Boolean {
+    if (input.length == SHORT_CODE_LENGTH) return false
+    return input.all { ALPHABET.contains(it) }
+  }
+
   private fun encodeToBase62(bytes: ByteArray): String {
     var number = BigInteger(1, bytes)
 
