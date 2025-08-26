@@ -6,11 +6,13 @@ import com.behlers.shortener.service.url.domain.DeleteUrlResponseBody
 import com.behlers.shortener.service.url.domain.UpdateUrlRequestBody
 import com.behlers.shortener.service.url.domain.UrlEntity
 import com.behlers.shortener.service.url.repository.UrlRepository
+import com.behlers.shortener.service.url.service.EncodingService
 import io.kotest.matchers.date.shouldBeAfter
 import io.kotest.matchers.date.shouldBeBefore
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import java.time.Instant
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
@@ -26,6 +28,8 @@ class UrlCrudControllerTest : TestContainerBase() {
   @Autowired lateinit var urlRepository: UrlRepository
 
   @Autowired lateinit var webClient: WebTestClient
+
+  @Autowired lateinit var encodingService: EncodingService
 
   @AfterEach
   fun cleanup() {
@@ -201,5 +205,30 @@ class UrlCrudControllerTest : TestContainerBase() {
       .exchange()
       .expectStatus()
       .is4xxClientError
+  }
+
+  @Test
+  fun `colliding url creates new short code`() {
+    val newUrl = "https://new.test.com"
+    val conflictingShortCode = encodingService.encode(newUrl)
+    urlRepository.save(
+      UrlEntity(shortCode = conflictingShortCode, longUrl = "https://old.test.com")
+    )
+
+    webClient
+      .post()
+      .uri("/api/v1/url")
+      .bodyValue(CreateUrlRequestBody(longUrl = newUrl))
+      .exchange()
+      .expectStatus()
+      .is2xxSuccessful
+      .expectBody(UrlEntity::class.java)
+      .value {
+        it.shortCode.shouldNotBeNull()
+        it.shortCode shouldNotBe conflictingShortCode
+        it.longUrl shouldBe newUrl
+
+        urlRepository.getUrlByShortCode(it.shortCode).shouldNotBeNull()
+      }
   }
 }

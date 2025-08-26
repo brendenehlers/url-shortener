@@ -13,8 +13,10 @@ class EncodingService {
     val md5: MessageDigest = MessageDigest.getInstance("MD5")
   }
 
-  fun encode(input: String): String {
-    val digest = md5.digest(input.toByteArray())
+  fun encode(input: String, salt: String? = null): String {
+    var inputStr = input
+    salt?.let { inputStr += salt }
+    val digest = md5.digest(inputStr.toByteArray())
     return encodeToBase62(digest)
   }
 

@@ -17,10 +17,11 @@ class UrlService(
   }
 
   fun createUrl(longUrl: URL): UrlEntity {
-    val shortCode = encodingService.encode(longUrl.toString())
+    var shortCode = encodingService.encode(longUrl.toString())
 
-    if (urlRepository.existsUrlByShortCode(shortCode)) {
-      return getUrl(shortCode)
+    var i = 0
+    while (urlRepository.existsUrlByShortCode(shortCode)) {
+      shortCode = encodingService.encode(longUrl.toString(), (i++).toString())
     }
 
     return urlRepository.save(UrlEntity(shortCode, longUrl.toString()))
