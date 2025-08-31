@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package com.behlers.shortener.service.shared.domain;
+option java_package = "com.behlers.shortener.service.shared.domain";
+option java_multiple_files = true;
+option java_outer_classname = "ProtoDefs";
+
+message UrlAnalyticsMessage {
+  string short_code = 1;
+  UrlAnalyticsMessageType type = 2;
+}
+
+enum UrlAnalyticsMessageType {
+  Create = 0;
+  Update = 1;
+}
