@@ -1,5 +1,8 @@
 package com.behlers.shortener.service.url.controller
 
+import com.behlers.shortener.service.shared.domain.UrlAnalyticsMessageType
+import com.behlers.shortener.service.shared.domain.urlAnalyticsMessage
+import com.behlers.shortener.service.shared.service.MessagingService
 import com.behlers.shortener.service.url.domain.CreateUrlRequestBody
 import com.behlers.shortener.service.url.domain.DeleteUrlResponseBody
 import com.behlers.shortener.service.url.domain.InvalidCodeException
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController
 class UrlCrudController(
   private val urlService: UrlService,
   private val encodingService: EncodingService,
+  private val messagingService: MessagingService,
 ) {
 
   @GetMapping("/{shortCode}")
@@ -37,7 +41,14 @@ class UrlCrudController(
 
   @PostMapping
   fun createUrl(@RequestBody createUrlRequestBody: CreateUrlRequestBody): UrlEntity {
-    return createUrlWrapper(createUrlRequestBody.longUrl) { urlService.createUrl(it) }
+    val url = createUrlWrapper(createUrlRequestBody.longUrl) { urlService.createUrl(it) }
+    messagingService.sendAnalyticsMessage(
+      urlAnalyticsMessage {
+        shortCode = url.shortCode
+        type = UrlAnalyticsMessageType.Create
+      }
+    )
+    return url
   }
 
   @PostMapping("/{shortCode}")
