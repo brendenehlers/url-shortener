@@ -5,9 +5,7 @@ import com.behlers.shortener.service.analytics.repository.UrlStatsRepository
 import org.springframework.stereotype.Service
 
 @Service
-class StatisticsService(
-  private val urlStatsRepository: UrlStatsRepository
-) {
+class StatisticsService(private val urlStatsRepository: UrlStatsRepository) {
   fun getSortedHits(sortingOrder: SortingOrder, limit: Int = 10): List<UrlStatsEntity> {
     return when (sortingOrder) {
       SortingOrder.DESC -> urlStatsRepository.getMostHitWithLimit(limit)
