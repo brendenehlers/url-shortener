@@ -6,11 +6,11 @@ import com.behlers.shortener.service.shared.domain.urlAnalyticsMessage
 import com.behlers.shortener.service.shared.service.EncodingService
 import com.behlers.shortener.service.shared.service.MessagingService
 import com.behlers.shortener.service.shared.service.UrlService
-import com.behlers.shortener.service.url.domain.CreateUrlRequestBody
-import com.behlers.shortener.service.url.domain.DeleteUrlResponseBody
-import com.behlers.shortener.service.url.domain.InvalidCodeException
-import com.behlers.shortener.service.url.domain.InvalidUrlSyntaxException
-import com.behlers.shortener.service.url.domain.UpdateUrlRequestBody
+import com.behlers.shortener.service.url.domain.api.CreateUrlRequestBody
+import com.behlers.shortener.service.url.domain.api.DeleteUrlResponseBody
+import com.behlers.shortener.service.url.domain.exception.InvalidCodeException
+import com.behlers.shortener.service.url.domain.exception.InvalidUrlSyntaxException
+import com.behlers.shortener.service.url.domain.api.UpdateUrlRequestBody
 import java.net.MalformedURLException
 import java.net.URI
 import java.net.URISyntaxException

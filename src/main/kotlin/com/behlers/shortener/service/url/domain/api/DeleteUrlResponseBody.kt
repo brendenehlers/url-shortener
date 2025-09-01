@@ -1,4 +1,4 @@
-package com.behlers.shortener.service.url.domain
+package com.behlers.shortener.service.url.domain.api
 
 /**
  * Response body for URL deletion requests.

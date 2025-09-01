@@ -1,4 +1,4 @@
-package com.behlers.shortener.service.url.domain
+package com.behlers.shortener.service.url.domain.exception
 
 /**
  * Exception thrown when a URL cannot be shortened due to invalid syntax.

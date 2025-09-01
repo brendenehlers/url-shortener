@@ -5,7 +5,7 @@ import com.behlers.shortener.service.analytics.domain.UrlStatsEntity
 import com.behlers.shortener.service.analytics.repository.UrlStatsRepository
 import com.behlers.shortener.service.shared.domain.UrlEntity
 import com.behlers.shortener.service.shared.repository.UrlRepository
-import com.behlers.shortener.service.url.domain.CreateUrlRequestBody
+import com.behlers.shortener.service.url.domain.api.CreateUrlRequestBody
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe

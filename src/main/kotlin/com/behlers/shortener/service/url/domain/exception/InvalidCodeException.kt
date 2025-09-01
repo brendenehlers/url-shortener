@@ -1,4 +1,4 @@
-package com.behlers.shortener.service.url.domain
+package com.behlers.shortener.service.url.domain.exception
 
 /**
  * Exception thrown when an invalid short code is provided.

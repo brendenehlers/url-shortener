@@ -2,8 +2,8 @@ package com.behlers.shortener.service.url.controller
 
 import com.behlers.shortener.service.shared.domain.DefaultErrorResponse
 import com.behlers.shortener.service.shared.domain.UrlNotFoundException
-import com.behlers.shortener.service.url.domain.InvalidCodeException
-import com.behlers.shortener.service.url.domain.InvalidUrlSyntaxException
+import com.behlers.shortener.service.url.domain.exception.InvalidCodeException
+import com.behlers.shortener.service.url.domain.exception.InvalidUrlSyntaxException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
