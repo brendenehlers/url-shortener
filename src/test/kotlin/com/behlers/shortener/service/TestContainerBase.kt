@@ -31,17 +31,18 @@ open class TestContainerBase {
         .withListener("kafka:29092")
         .withNetwork(network)
 
-    val schemaRegistry: GenericContainer<*> = GenericContainer(DockerImageName.parse("confluentinc/cp-schema-registry:latest"))
-      .waitingFor(Wait.forHttp("/subjects").forStatusCode(200))
-      .withStartupTimeout(Duration.ofSeconds(30))
-      .dependsOn(kafka)
-      .withNetwork(network)
-      .withExposedPorts(8081)
-      .withEnv("SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS", "kafka:29092")
-      .withEnv("SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL", "PLAINTEXT")
-      .withEnv("SCHEMA_REGISTRY_LISTENERS", "http://0.0.0.0:8081")
-      .withEnv("SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL", "http")
-      .withEnv("SCHEMA_REGISTRY_HOST_NAME", "schema-registry")
+    val schemaRegistry: GenericContainer<*> =
+      GenericContainer(DockerImageName.parse("confluentinc/cp-schema-registry:latest"))
+        .waitingFor(Wait.forHttp("/subjects").forStatusCode(200))
+        .withStartupTimeout(Duration.ofSeconds(30))
+        .dependsOn(kafka)
+        .withNetwork(network)
+        .withExposedPorts(8081)
+        .withEnv("SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS", "kafka:29092")
+        .withEnv("SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL", "PLAINTEXT")
+        .withEnv("SCHEMA_REGISTRY_LISTENERS", "http://0.0.0.0:8081")
+        .withEnv("SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL", "http")
+        .withEnv("SCHEMA_REGISTRY_HOST_NAME", "schema-registry")
 
     @BeforeAll
     @JvmStatic
