@@ -7,9 +7,17 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
+/**
+ * Handles exceptions for router-related controllers, providing standardized error responses.
+ */
 @RestControllerAdvice
 class RouterControllerAdvice {
 
+  /**
+   * Handles UrlNotFoundException and returns a NOT_FOUND error response.
+   * @param exception The thrown UrlNotFoundException.
+   * @return ResponseEntity containing the error details.
+   */
   @ExceptionHandler(UrlNotFoundException::class)
   fun handleUrlNotFoundException(
     exception: UrlNotFoundException
