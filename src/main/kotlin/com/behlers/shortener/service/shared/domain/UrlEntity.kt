@@ -1,4 +1,4 @@
-package com.behlers.shortener.service.url.domain
+package com.behlers.shortener.service.shared.domain
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

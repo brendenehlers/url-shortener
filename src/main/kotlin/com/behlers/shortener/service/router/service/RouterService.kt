@@ -1,6 +1,6 @@
 package com.behlers.shortener.service.router.service
 
-import com.behlers.shortener.service.url.service.UrlService
+import com.behlers.shortener.service.shared.service.UrlService
 import org.springframework.stereotype.Service
 
 @Service

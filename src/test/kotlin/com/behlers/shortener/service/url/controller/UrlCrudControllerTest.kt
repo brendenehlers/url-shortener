@@ -1,12 +1,12 @@
 package com.behlers.shortener.service.url.controller
 
 import com.behlers.shortener.service.TestContainerBase
+import com.behlers.shortener.service.shared.domain.UrlEntity
+import com.behlers.shortener.service.shared.repository.UrlRepository
+import com.behlers.shortener.service.shared.service.EncodingService
 import com.behlers.shortener.service.url.domain.CreateUrlRequestBody
 import com.behlers.shortener.service.url.domain.DeleteUrlResponseBody
 import com.behlers.shortener.service.url.domain.UpdateUrlRequestBody
-import com.behlers.shortener.service.url.domain.UrlEntity
-import com.behlers.shortener.service.url.repository.UrlRepository
-import com.behlers.shortener.service.url.service.EncodingService
 import io.kotest.matchers.date.shouldBeAfter
 import io.kotest.matchers.date.shouldBeBefore
 import io.kotest.matchers.nulls.shouldBeNull

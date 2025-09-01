@@ -1,4 +1,4 @@
-package com.behlers.shortener.service.url.service
+package com.behlers.shortener.service.shared.service
 
 import java.math.BigInteger
 import java.security.MessageDigest

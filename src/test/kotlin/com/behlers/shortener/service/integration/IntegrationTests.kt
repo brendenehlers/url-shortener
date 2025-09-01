@@ -3,14 +3,15 @@ package com.behlers.shortener.service.integration
 import com.behlers.shortener.service.TestContainerBase
 import com.behlers.shortener.service.analytics.domain.UrlStatsEntity
 import com.behlers.shortener.service.analytics.repository.UrlStatsRepository
+import com.behlers.shortener.service.shared.domain.UrlEntity
+import com.behlers.shortener.service.shared.repository.UrlRepository
 import com.behlers.shortener.service.url.domain.CreateUrlRequestBody
-import com.behlers.shortener.service.url.domain.UrlEntity
-import com.behlers.shortener.service.url.repository.UrlRepository
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import java.time.Duration
 import org.awaitility.Awaitility.await
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,6 +28,13 @@ class IntegrationTests : TestContainerBase() {
   @Autowired lateinit var urlRepository: UrlRepository
 
   @Autowired lateinit var urlStatsRepository: UrlStatsRepository
+
+  @AfterEach
+  fun cleanup() {
+    // url_stats has fk constraint on urls
+    urlStatsRepository.deleteAll()
+    urlRepository.deleteAll()
+  }
 
   @Test
   fun `creating url via api adds urls stats entry to database`() {

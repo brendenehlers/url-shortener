@@ -1,8 +1,8 @@
-package com.behlers.shortener.service.url.service
+package com.behlers.shortener.service.shared.service
 
-import com.behlers.shortener.service.url.domain.UrlEntity
-import com.behlers.shortener.service.url.domain.UrlNotFoundException
-import com.behlers.shortener.service.url.repository.UrlRepository
+import com.behlers.shortener.service.shared.domain.UrlEntity
+import com.behlers.shortener.service.shared.domain.UrlNotFoundException
+import com.behlers.shortener.service.shared.repository.UrlRepository
 import java.net.URL
 import org.springframework.stereotype.Service
 

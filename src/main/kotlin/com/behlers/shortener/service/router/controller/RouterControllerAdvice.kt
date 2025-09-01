@@ -1,7 +1,7 @@
 package com.behlers.shortener.service.router.controller
 
 import com.behlers.shortener.service.shared.domain.DefaultErrorResponse
-import com.behlers.shortener.service.url.domain.UrlNotFoundException
+import com.behlers.shortener.service.shared.domain.UrlNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler

@@ -3,6 +3,7 @@ package com.behlers.shortener.service
 import java.time.Duration
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.GenericContainer
@@ -13,10 +14,11 @@ import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.kafka.ConfluentKafkaContainer
 import org.testcontainers.utility.DockerImageName
 
+@DirtiesContext
 @Testcontainers
 open class TestContainerBase {
   companion object {
-    val network = Network.newNetwork()
+    val network: Network = Network.newNetwork()
 
     val db: PostgreSQLContainer<*> =
       PostgreSQLContainer("postgres:latest")
