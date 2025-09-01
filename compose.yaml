@@ -83,6 +83,18 @@ services:
     depends_on:
       - kafka
 
+  grafana:
+    image: grafana/otel-lgtm:latest
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    networks:
+      - cluster
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "3000:3000"
+
 networks:
   cluster:
     driver: bridge

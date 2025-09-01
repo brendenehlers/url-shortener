@@ -1,4 +1,5 @@
 import com.google.protobuf.gradle.id
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
 	kotlin("jvm") version "1.9.25"
@@ -32,7 +33,8 @@ repositories {
 	mavenCentral()
 	maven {
 		url = uri("https://packages.confluent.io/maven")
-	}}
+	}
+}
 
 dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -47,6 +49,7 @@ dependencies {
 	implementation("org.springframework.kafka:spring-kafka")
 	implementation("com.google.protobuf:protobuf-kotlin:4.32.0")
 	implementation("io.confluent:kafka-protobuf-serializer:8.0.0")
+	implementation("io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter")
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")
 	testImplementation("org.testcontainers:db2")
@@ -91,5 +94,11 @@ sourceSets {
 			srcDirs("build/generated/source/proto/main/java")
 			srcDirs("build/generated/source/proto/main/kotlin")
 		}
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.19.0")
 	}
 }
