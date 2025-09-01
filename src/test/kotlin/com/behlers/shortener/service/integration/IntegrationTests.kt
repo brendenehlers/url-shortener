@@ -1,12 +1,13 @@
 package com.behlers.shortener.service.integration
 
 import com.behlers.shortener.service.TestContainerBase
+import com.behlers.shortener.service.analytics.domain.UrlStatsEntity
 import com.behlers.shortener.service.analytics.repository.UrlStatsRepository
-import com.behlers.shortener.service.analytics.service.UrlStatsService
 import com.behlers.shortener.service.url.domain.CreateUrlRequestBody
 import com.behlers.shortener.service.url.domain.UrlEntity
 import com.behlers.shortener.service.url.repository.UrlRepository
 import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import org.awaitility.Awaitility.await
 import org.junit.jupiter.api.Test
@@ -48,7 +49,6 @@ class IntegrationTests : TestContainerBase() {
       .pollInterval(Duration.ofSeconds(1))
       .atMost(Duration.ofSeconds(10))
       .until {
-        println("in until loop")
         val urlStats = urlStatsRepository.findByShortCode(response.shortCode)
           ?: fail { "could not find url stats" }
 
@@ -59,4 +59,36 @@ class IntegrationTests : TestContainerBase() {
       }
   }
 
+  @Test
+  fun `routing via short code updates url stats`() {
+    val testCode = "testcode"
+    urlRepository.save(UrlEntity(
+      shortCode = testCode,
+      longUrl = "https://test.com",
+    ))
+
+    urlStatsRepository.save(UrlStatsEntity(
+      shortCode = testCode,
+    ))
+
+    webClient
+      .get()
+      .uri("/$testCode")
+      .exchange()
+      .expectStatus()
+      .is3xxRedirection
+
+    await()
+      .pollDelay(Duration.ofSeconds(1))
+      .pollInterval(Duration.ofSeconds(1))
+      .atMost(Duration.ofSeconds(10))
+      .until {
+        val urlStats = urlStatsRepository.findByShortCode(testCode)
+          ?: fail { "could not find url stats" }
+
+        urlStats.hits shouldBe 1
+        urlStats.lastHit.shouldNotBeNull()
+        true
+      }
+  }
 }

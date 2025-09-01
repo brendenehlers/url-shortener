@@ -8,6 +8,6 @@ import java.time.Instant
 @Entity(name = "url_stats")
 class UrlStatsEntity(
   @Id @Column(name = "short_code") val shortCode: String,
-  @Column(name = "hits") val hits: Int,
-  @Column(name = "last_hit") val lastHit: Instant?,
+  @Column(name = "hits") val hits: Int = 0,
+  @Column(name = "last_hit") val lastHit: Instant? = null,
 )
