@@ -9,6 +9,16 @@ class RouterApplicationTests : TestContainerBase() {
 
   @Test
   fun `db is live`() {
-    assertTrue(db.isRunning)
+    assertTrue { db.isRunning }
+  }
+
+  @Test
+  fun `kafka is live`() {
+    assertTrue { kafka.isRunning }
+  }
+
+  @Test
+  fun `schema registry is live`() {
+    assertTrue { schemaRegistry.isRunning }
   }
 }
