@@ -5,8 +5,18 @@ import com.behlers.shortener.service.shared.domain.UrlAnalyticsMessage
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
+/**
+ * Service for sending URL analytics messages to Kafka.
+ *
+ * @property kafkaTemplate Kafka template for sending messages.
+ */
 @Service
 class MessagingService(private val kafkaTemplate: KafkaTemplate<String, UrlAnalyticsMessage>) {
+  /**
+   * Sends a URL analytics message to the analytics topic.
+   *
+   * @param message The analytics message to send.
+   */
   fun sendAnalyticsMessage(message: UrlAnalyticsMessage) {
     kafkaTemplate.send(KafkaConfig.ANALYTICS_TOPIC_NAME, message.shortCode, message)
   }
