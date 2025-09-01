@@ -10,10 +10,20 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * REST controller for managing analytics messages.
+ * Provides endpoint to publish analytics events to Kafka.
+ */
 @RestController
 @RequestMapping("/analytics")
 class ManagementController(private val kafkaTemplate: KafkaTemplate<String, UrlAnalyticsMessage>) {
 
+  /**
+   * Publishes an analytics message to Kafka for the given short code and type.
+   *
+   * @param shortCode the short URL code
+   * @param type the type of analytics event
+   */
   @PostMapping("/publish/{shortCode}/{type}")
   fun publish(@PathVariable shortCode: String, @PathVariable type: UrlAnalyticsMessageType) {
     kafkaTemplate.send(
