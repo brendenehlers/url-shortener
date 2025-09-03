@@ -1,8 +1,10 @@
 package com.behlers.shortener.service.router.controller
 
 import com.behlers.shortener.service.router.service.RouterService
+import com.behlers.shortener.service.shared.domain.InvalidCodeException
 import com.behlers.shortener.service.shared.domain.UrlAnalyticsMessageType
 import com.behlers.shortener.service.shared.domain.urlAnalyticsMessage
+import com.behlers.shortener.service.shared.service.EncodingService
 import com.behlers.shortener.service.shared.service.MessagingService
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
@@ -13,27 +15,35 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 /**
- * Controller for handling routing requests from short codes to long URLs.
- * Sends analytics messages and performs HTTP redirects.
+ * Controller for handling routing requests from short codes to long URLs. Sends analytics messages
+ * and performs HTTP redirects.
+ *
  * @property routerService Service for URL resolution.
  * @property messagingService Service for sending analytics messages.
+ * @property encodingService Service for managing encodings
  */
 @RestController
 @RequestMapping("/")
 class RouterController(
   private val routerService: RouterService,
   private val messagingService: MessagingService,
+  private val encodingService: EncodingService,
 ) {
   /**
    * Resolves the short code, sends an analytics message, and redirects to the long URL.
+   *
    * @param response HTTP response for sending the redirect.
    * @param shortCode The short code to resolve.
-   * @throws com.behlers.shortener.service.shared.domain.UrlNotFoundException if the short code does not exist.
+   * @throws com.behlers.shortener.service.shared.domain.UrlNotFoundException if the short code does
+   *   not exist.
+   * @throws com.behlers.shortener.service.shared.domain.InvalidCodeException if the short code
+   *   isn't valid
    * @see RouterService.getUrl
    */
   @GetMapping("{shortCode}")
   @ResponseStatus(HttpStatus.PERMANENT_REDIRECT)
   fun route(response: HttpServletResponse, @PathVariable shortCode: String) {
+    if (!encodingService.isValidEncoding(shortCode)) throw InvalidCodeException(shortCode)
     val longUrl = routerService.getUrl(shortCode)
     messagingService.sendAnalyticsMessage(
       urlAnalyticsMessage {

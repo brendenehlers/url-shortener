@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 
 /**
- * Repository for accessing URL statistics entities.
- * Provides methods for finding, checking existence, and retrieving most/least hit URLs.
+ * Repository for accessing URL statistics entities. Provides methods for finding, checking
+ * existence, and retrieving most/least hit URLs.
  */
 interface UrlStatsRepository : CrudRepository<UrlStatsEntity, UrlEntity> {
   /**

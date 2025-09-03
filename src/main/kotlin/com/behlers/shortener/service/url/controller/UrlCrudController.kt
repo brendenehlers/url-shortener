@@ -1,5 +1,6 @@
 package com.behlers.shortener.service.url.controller
 
+import com.behlers.shortener.service.shared.domain.InvalidCodeException
 import com.behlers.shortener.service.shared.domain.UrlAnalyticsMessageType
 import com.behlers.shortener.service.shared.domain.UrlEntity
 import com.behlers.shortener.service.shared.domain.urlAnalyticsMessage
@@ -8,9 +9,8 @@ import com.behlers.shortener.service.shared.service.MessagingService
 import com.behlers.shortener.service.shared.service.UrlService
 import com.behlers.shortener.service.url.domain.api.CreateUrlRequestBody
 import com.behlers.shortener.service.url.domain.api.DeleteUrlResponseBody
-import com.behlers.shortener.service.url.domain.exception.InvalidCodeException
-import com.behlers.shortener.service.url.domain.exception.InvalidUrlSyntaxException
 import com.behlers.shortener.service.url.domain.api.UpdateUrlRequestBody
+import com.behlers.shortener.service.url.domain.exception.InvalidUrlSyntaxException
 import java.net.MalformedURLException
 import java.net.URI
 import java.net.URISyntaxException
@@ -26,9 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 /**
- * Controller for CRUD operations on shortened URLs.
- * Provides endpoints for creating, retrieving, updating, and deleting URLs.
- * Validates input and sends analytics messages for relevant operations.
+ * Controller for CRUD operations on shortened URLs. Provides endpoints for creating, retrieving,
+ * updating, and deleting URLs. Validates input and sends analytics messages for relevant
+ * operations.
+ *
  * @property urlService Service for URL persistence and retrieval.
  * @property encodingService Service for short code validation.
  * @property messagingService Service for sending analytics messages.
@@ -43,10 +44,12 @@ class UrlCrudController(
 
   /**
    * Retrieves the URL entity for the given short code.
+   *
    * @param shortCode The short code to resolve.
    * @return The corresponding UrlEntity.
    * @throws InvalidCodeException if the short code is invalid.
-   * @throws com.behlers.shortener.service.shared.domain.UrlNotFoundException if the short code does not exist.
+   * @throws com.behlers.shortener.service.shared.domain.UrlNotFoundException if the short code does
+   *   not exist.
    */
   @GetMapping("/{shortCode}")
   fun getUrl(@PathVariable shortCode: String): UrlEntity {
@@ -56,6 +59,7 @@ class UrlCrudController(
 
   /**
    * Creates a new shortened URL.
+   *
    * @param createUrlRequestBody Request body containing the long URL.
    * @return The created UrlEntity.
    * @throws InvalidUrlSyntaxException if the long URL is invalid.
@@ -74,12 +78,14 @@ class UrlCrudController(
 
   /**
    * Updates the long URL for an existing short code.
+   *
    * @param shortCode The short code to update.
    * @param updateUrlRequestBody Request body containing the new long URL.
    * @return The updated UrlEntity.
    * @throws InvalidCodeException if the short code is invalid.
    * @throws InvalidUrlSyntaxException if the new long URL is invalid.
-   * @throws com.behlers.shortener.service.shared.domain.UrlNotFoundException if the short code does not exist.
+   * @throws com.behlers.shortener.service.shared.domain.UrlNotFoundException if the short code does
+   *   not exist.
    */
   @PostMapping("/{shortCode}")
   fun updateUrl(
@@ -92,10 +98,12 @@ class UrlCrudController(
 
   /**
    * Deletes the URL associated with the given short code.
+   *
    * @param shortCode The short code to delete.
    * @return ResponseEntity containing the deletion result message.
    * @throws InvalidCodeException if the short code is invalid.
-   * @throws com.behlers.shortener.service.shared.domain.UrlNotFoundException if the short code does not exist.
+   * @throws com.behlers.shortener.service.shared.domain.UrlNotFoundException if the short code does
+   *   not exist.
    */
   @DeleteMapping("/{shortCode}")
   fun deleteUrl(@PathVariable shortCode: String): ResponseEntity<DeleteUrlResponseBody> {
@@ -106,6 +114,7 @@ class UrlCrudController(
 
   /**
    * Validates the short code format using the encoding service.
+   *
    * @param shortCode The short code to validate.
    * @throws InvalidCodeException if the short code is invalid.
    */
@@ -115,6 +124,7 @@ class UrlCrudController(
 
   /**
    * Wraps URL creation and update logic, handling syntax validation and exceptions.
+   *
    * @param longUrl The long URL to validate and process.
    * @param fn Function to execute with the validated URL.
    * @return The resulting UrlEntity.

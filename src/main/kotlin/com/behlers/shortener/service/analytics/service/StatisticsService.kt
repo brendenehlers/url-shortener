@@ -4,9 +4,7 @@ import com.behlers.shortener.service.analytics.domain.UrlStatsEntity
 import com.behlers.shortener.service.analytics.repository.UrlStatsRepository
 import org.springframework.stereotype.Service
 
-/**
- * Service for retrieving URL statistics.
- */
+/** Service for retrieving URL statistics. */
 @Service
 class StatisticsService(private val urlStatsRepository: UrlStatsRepository) {
   /**
@@ -23,9 +21,7 @@ class StatisticsService(private val urlStatsRepository: UrlStatsRepository) {
     }
   }
 
-  /**
-   * Sorting order for URL statistics.
-   */
+  /** Sorting order for URL statistics. */
   enum class SortingOrder {
     ASC,
     DESC,

@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-/**
- * REST controller for retrieving URL statistics.
- */
+/** REST controller for retrieving URL statistics. */
 @RestController
 @RequestMapping("/api/v1/statistics")
 class StatisticsController(private val statisticsService: StatisticsService) {

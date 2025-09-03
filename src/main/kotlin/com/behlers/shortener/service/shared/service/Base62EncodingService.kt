@@ -7,25 +7,19 @@ import org.springframework.stereotype.Service
 /**
  * Implementation of EncodingService using base62 encoding and MD5 hashing.
  *
- * Encodes input strings into fixed-length short codes suitable for URLs.
- * Only characters in the defined alphabet are allowed.
+ * Encodes input strings into fixed-length short codes suitable for URLs. Only characters in the
+ * defined alphabet are allowed.
  */
 @Service
 class Base62EncodingService : EncodingService {
   companion object {
-    /**
-     * Length of the generated short code.
-     */
+    /** Length of the generated short code. */
     const val SHORT_CODE_LENGTH = 8
 
-    /**
-     * Allowed characters for short codes.
-     */
+    /** Allowed characters for short codes. */
     const val ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
-    /**
-     * MD5 message digest instance for hashing.
-     */
+    /** MD5 message digest instance for hashing. */
     val md5: MessageDigest = MessageDigest.getInstance("MD5")
   }
 

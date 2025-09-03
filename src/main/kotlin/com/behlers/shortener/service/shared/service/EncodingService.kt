@@ -1,8 +1,6 @@
 package com.behlers.shortener.service.shared.service
 
-/**
- * Service interface for encoding and validating short codes.
- */
+/** Service interface for encoding and validating short codes. */
 interface EncodingService {
 
   /**

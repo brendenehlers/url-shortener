@@ -14,16 +14,14 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 /**
  * Kafka configuration for analytics topic and consumer setup.
  *
- * Provides beans for topic creation, consumer factory, and listener container factory
- * for UrlAnalyticsMessage protobuf messages.
+ * Provides beans for topic creation, consumer factory, and listener container factory for
+ * UrlAnalyticsMessage protobuf messages.
  */
 @Configuration
 class KafkaConfig {
 
   companion object {
-    /**
-     * Name of the analytics topic for URL analytics messages.
-     */
+    /** Name of the analytics topic for URL analytics messages. */
     const val ANALYTICS_TOPIC_NAME = "ANALYTICS-TOPIC"
   }
 

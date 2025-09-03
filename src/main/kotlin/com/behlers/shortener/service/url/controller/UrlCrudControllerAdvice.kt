@@ -1,22 +1,21 @@
 package com.behlers.shortener.service.url.controller
 
 import com.behlers.shortener.service.shared.domain.DefaultErrorResponse
+import com.behlers.shortener.service.shared.domain.InvalidCodeException
 import com.behlers.shortener.service.shared.domain.UrlNotFoundException
-import com.behlers.shortener.service.url.domain.exception.InvalidCodeException
 import com.behlers.shortener.service.url.domain.exception.InvalidUrlSyntaxException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
-/**
- * Handles exceptions for URL CRUD operations, providing standardized error responses.
- */
+/** Handles exceptions for URL CRUD operations, providing standardized error responses. */
 @RestControllerAdvice(basePackageClasses = [UrlCrudController::class])
 class UrlCrudControllerAdvice {
 
   /**
    * Handles UrlNotFoundException and returns a NOT_FOUND error response.
+   *
    * @param exception The thrown UrlNotFoundException.
    * @return ResponseEntity containing the error details.
    */
@@ -29,7 +28,9 @@ class UrlCrudControllerAdvice {
   }
 
   /**
-   * Handles InvalidUrlSyntaxException and InvalidCodeException, returning a BAD_REQUEST error response.
+   * Handles InvalidUrlSyntaxException and InvalidCodeException, returning a BAD_REQUEST error
+   * response.
+   *
    * @param exception The thrown exception (invalid URL syntax or code).
    * @return ResponseEntity containing the error details.
    */

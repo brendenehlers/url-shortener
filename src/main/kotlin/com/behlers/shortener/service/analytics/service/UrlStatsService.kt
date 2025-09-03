@@ -8,14 +8,15 @@ import java.time.Instant
 import org.springframework.stereotype.Service
 
 /**
- * Service for managing URL statistics.
- * Provides creation and update operations for URL statistics entities.
+ * Service for managing URL statistics. Provides creation and update operations for URL statistics
+ * entities.
  */
 @Service
 class UrlStatsService(private val urlStatsRepository: UrlStatsRepository) {
 
   /**
-   * Updates URL statistics for the given short code by incrementing hit count and updating last hit timestamp.
+   * Updates URL statistics for the given short code by incrementing hit count and updating last hit
+   * timestamp.
    *
    * @param shortCode the short URL code
    * @return updated UrlStatsEntity

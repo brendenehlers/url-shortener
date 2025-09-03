@@ -6,8 +6,7 @@ import jakarta.persistence.Id
 import java.time.Instant
 
 /**
- * Entity representing URL statistics.
- * Stores short code, hit count, and last hit timestamp.
+ * Entity representing URL statistics. Stores short code, hit count, and last hit timestamp.
  *
  * @property shortCode the short URL code (primary key)
  * @property hits the number of times the URL was accessed
