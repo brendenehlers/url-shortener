@@ -97,6 +97,8 @@ services:
     build: .
     ports:
       - "8080:8080"
+    profiles:
+      - shortener
     env_file:
       - local.env
     environment:
