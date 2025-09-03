@@ -1,5 +1,4 @@
 import com.google.protobuf.gradle.id
-import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
 	kotlin("jvm") version "1.9.25"
@@ -50,6 +49,7 @@ dependencies {
 	implementation("com.google.protobuf:protobuf-kotlin:4.32.0")
 	implementation("io.confluent:kafka-protobuf-serializer:8.0.0")
 	implementation("io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.12")
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")
 	testImplementation("org.testcontainers:db2")

@@ -5,9 +5,11 @@ import com.behlers.shortener.service.shared.domain.UrlAnalyticsMessageType
 import com.behlers.shortener.service.shared.domain.urlAnalyticsMessage
 import com.behlers.shortener.service.shared.service.MessagingService
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -30,6 +32,7 @@ class RouterController(
    * @see RouterService.getUrl
    */
   @GetMapping("{shortCode}")
+  @ResponseStatus(HttpStatus.PERMANENT_REDIRECT)
   fun route(response: HttpServletResponse, @PathVariable shortCode: String) {
     val longUrl = routerService.getUrl(shortCode)
     messagingService.sendAnalyticsMessage(
