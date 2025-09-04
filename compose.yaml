@@ -22,9 +22,7 @@ services:
     restart: always
     ports:
       - "9092:9092"
-      - "9093:9093"
       - "9997:9997"
-      - "29092:29092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
